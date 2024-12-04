@@ -1,0 +1,98 @@
+CREATE DATABASE uni;
+USE uni;
+
+/* Problem1 */
+
+CREATE TABLE Students(
+Student_Id INTEGER PRIMARY KEY,
+naam VARCHAR(50) NOT NULL,
+Age INT CHECK (Age BETWEEN 18 AND 25),
+Grade DECIMAL(3, 1) CHECK (Grade BETWEEN 0.0 AND 10.0)
+);
+INSERT INTO Students (Student_ID, naam, Age, Grade)
+VALUES 
+(2, 'abc', 22, 1.5),
+(3, 'def', 21, 1.2);
+
+
+/* Problem2 */
+
+CREATE TABLE Courses(
+CourseId INTEGER PRIMARY KEY,
+CourseName VARCHAR(100),
+Credits INTEGER NOT NULL
+);
+INSERT INTO Courses (CourseName, Credits)
+VALUES ('Database Systems', 3);
+/*ERROR: null value in column "CourseID" violates not-null constraint*/
+
+
+/* Problem3 */
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL
+);
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    ProductID INT,
+    OrderQuantity INT NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+INSERT INTO Orders (OrderID, ProductID, OrderQuantity)
+VALUES (1001, 999, 5);
+/*Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails */
+INSERT INTO Products (ProductID, ProductName)
+VALUES (1, 'Laptop'),
+       (2, 'Smartphone'),
+       (3, 'Headphones');
+       
+INSERT INTO Orders (OrderID, ProductID, OrderQuantity)
+VALUES (1001, 1, 2),  
+       (1002, 2, 5),  
+       (1003, 3, 3); 
+
+
+/* Problem4 */
+
+CREATE TABLE Employee(
+EmployeeId INT PRIMARY KEY,
+Email VARCHAR(50) UNIQUE NULL
+);
+INSERT INTO Employee(EmployeeId, Email)
+VALUES
+(1,'abc@gmail.com'),
+(2,null),
+(3,'abcd@gmail.com');
+ /*Duplicate entry 'abc@gmail.com' for key 'employee.Email'	*/
+ 
+ 
+ /* Problem5 */
+
+ CREATE TABLE Accounts (
+    AccountID INTEGER PRIMARY KEY,          
+    MobileNumber VARCHAR(10) NOT NULL, 
+    Balance DECIMAL(10, 2) CHECK (Balance >= 0)  
+);
+
+ CREATE TABLE Transactions (
+    TransactionID INT PRIMARY KEY,          
+    AccountID INT,
+    TransactionAmount DECIMAL NOT NULL CHECK (TransactionAmount != 0), 
+    FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID) 
+);
+INSERT INTO Accounts (AccountID, MobileNumber, Balance)
+VALUES (1, '1234567890', 500.00),
+       (2, '9876543210', 1000.00),
+       (3, '5556667770', 200.00);
+INSERT INTO Transactions (TransactionID, AccountID, TransactionAmount)
+VALUES (1, 1, 100.00), 
+       (2, 2, -50.00),  
+       (3, 3, 150.00);  
+
+
+
+
+
+
+
